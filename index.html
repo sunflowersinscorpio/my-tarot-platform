@@ -45,7 +45,7 @@
             border-radius: 10px;
             padding: 15px;
             width: 240px;
-            min-height: 400px;
+            min-height: 480px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -54,18 +54,24 @@
         }
         .card-visual-box { 
             width: 100%; 
-            height: 140px; 
-            background: linear-gradient(45deg, #2e1065, #4c1d95);
-            border: 2px dashed var(--gold);
+            height: 200px; 
+            background: #0f0b1e;
+            border: 1px solid var(--gold);
             border-radius: 6px; 
             margin-bottom: 12px; 
+            overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2.2em;
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.6);
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.8);
         }
-        .reversed { transform: rotate(180deg); }
+        .card-visual-box svg {
+            width: 100%;
+            height: 100%;
+            transition: transform 0.3s ease;
+        }
+        .reversed svg { transform: rotate(180deg); }
+        
         .card-title { font-weight: bold; color: var(--gold); margin-bottom: 8px; font-size: 1.1em; }
         .card-desc { font-size: 0.85em; line-height: 1.5; text-align: left; width: 100%; margin-top: 6px; }
         
@@ -98,7 +104,13 @@
         textarea { height: 80px; resize: none; }
         .journal-entry { background: #201a35; padding: 15px; border-radius: 10px; text-align: left; margin-bottom: 15px; border-left: 4px solid var(--accent); }
         .journal-date { font-size: 0.8em; color: #a78bfa; }
-        .paywall-box { background: #2d124d; padding: 30px; border-radius: 12px; border: 2px dashed var(--gold); margin: 20px 0; }
+        
+        /* High-Converting Paywall UI */
+        .paywall-box { background: linear-gradient(145deg, #1d1238, #2d124d); padding: 35px 20px; border-radius: 15px; border: 2px solid var(--gold); margin: 20px 0; text-align: center; box-shadow: 0 8px 25px rgba(0,0,0,0.6); }
+        .premium-badge { background-color: var(--accent); color: #fff; font-weight: bold; padding: 4px 12px; border-radius: 20px; font-size: 0.85em; display: inline-block; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; }
+        .paywall-list { text-align: left; max-width: 380px; margin: 20px auto; padding: 0; list-style: none; }
+        .paywall-list li { margin-bottom: 12px; font-size: 0.95em; display: flex; align-items: center; gap: 10px; }
+        .paywall-list li::before { content: "✨"; color: var(--gold); }
     </style>
 </head>
 <body>
@@ -153,13 +165,30 @@
     <!-- WEEKLY PAID FORECAST -->
     <div id="forecast" class="tab-content">
         <h2>Weekly Cosmic Transit Forecast</h2>
+        
         <div id="paywall-ui" class="paywall-box">
-            <h3 style="color:var(--gold); margin-top:0;">🔒 Premium Portal Locked</h3>
-            <p>Unlock continuous tracking profiles for current retrogrades, lunar shifts, and planetary configuration advice updated automatically every week.</p>
-            <button onclick="unlockForecast()" style="background-color: var(--gold); color: #000; font-size: 1.1em; padding: 12px 25px;">
-                Unlock for $2.99 / Month
+            <div class="premium-badge">🔮 Premium Portal</div>
+            <h3 style="color:var(--text); margin: 0 0 10px 0; font-size: 1.6em;">Unlock the Weekly Forecast</h3>
+            <p style="color: #b3afcc; font-size: 0.95em; margin: 0;">Get continuous tracking profiles for current retrogrades, planetary configuration maps, and lunar shifts updated weekly by Sarah.</p>
+            
+            <ul class="paywall-list">
+                <li>Complete access to long-form transit breakdowns</li>
+                <li>Strategic ritual instructions tailored to current energies</li>
+                <li>Avoid celestial friction with exact dates &amp; warnings</li>
+            </ul>
+
+            <div style="font-size: 1.4em; color: var(--gold); font-weight: bold; margin-bottom: 5px;">
+                $2.99 / Month
+            </div>
+            <div style="font-size: 0.9em; color: #a78bfa; margin-bottom: 20px;">
+                Cancel completely anytime.
+            </div>
+
+            <button onclick="redirectToShopifySubscription()" style="background-color: var(--gold); color: #000; font-size: 1.2em; padding: 14px 35px; width: 90%; border-radius: 30px; box-shadow: 0 4px 15px rgba(255, 183, 3, 0.4);">
+                🔒 Subscribe &amp; Unlock Portal
             </button>
         </div>
+
         <div id="forecast-content" style="display:none; text-align:left; line-height:1.6;">
             <div style="background:#22c55e; color:black; padding:8px; border-radius:5px; font-weight:bold; margin-bottom:15px; text-align:center;">
                 ✅ Premium Membership Active
@@ -174,7 +203,6 @@
         <h2>Premium Custom Spreads</h2>
         <p style="margin-bottom:20px; font-size:0.95em;">Need to deep-dive into complex energetic structures or emotional timelines? Select one of our specialized diagnostic mapping layouts below.</p>
         
-        <!-- SPREAD 1 -->
         <div class="premium-item-card">
             <div class="premium-title">
                 Tough Sh*t Tarot Spread <span class="premium-tag">5 Cards</span>
@@ -183,7 +211,6 @@
             <button onclick="window.open('https://sunflowersinscorpio.myshopify.com/products/problem-solving-tarot-spread', '_blank')" style="background-color:#22c55e; margin-top:5px; padding:6px 12px; font-size:0.85em;">Order This Spread</button>
         </div>
 
-        <!-- SPREAD 2 -->
         <div class="premium-item-card">
             <div class="premium-title">
                 Love Blockage Tarot Spread <span class="premium-tag">3 Cards</span>
@@ -192,7 +219,6 @@
             <button onclick="window.open('https://sunflowersinscorpio.myshopify.com/products/love-blockage-tarot-spread', '_blank')" style="background-color:#22c55e; margin-top:5px; padding:6px 12px; font-size:0.85em;">Order This Spread</button>
         </div>
 
-        <!-- SPREAD 3 -->
         <div class="premium-item-card">
             <div class="premium-title">
                 Getting to Know Your Spirit Guide <span class="premium-tag">6 Cards</span>
@@ -206,7 +232,7 @@
         </button>
     </div>
 
-    <!-- BOOKINGS HUB (SARAH RESURRECTED) -->
+    <!-- BOOKINGS HUB -->
     <div id="book" class="tab-content">
         <h2>Book a Live Personal Reading with Sarah</h2>
         <p style="margin-bottom: 25px;">Work one-on-one with Sarah to map out your energetic pathways, timeline patterns, and long-form personal oracle validation profiles.</p>
@@ -222,14 +248,62 @@
 
     <script>
         const tarotDeck = [
-            { name: "The Fool", yesNo: "Yes", meaning: "This card represents absolute blank-slate potential, pure freedom, and the courage to begin anew. The universe is telling you to step forward with faith, even if you can't see where the path drops off. Trust your instinctual heart right now.", revMeaning: "You are standing on a precipice of change but hesitation or reckless planning is blocking you. Reversal warns against running blindly into commitments without checking your boundaries first." },
-            { name: "The Magician", yesNo: "Yes", meaning: "You possess all necessary creative tools, logical skillsets, and manifestation resources to shape your physical timeline. This is an explicit signal from the universe to take immediate, inspired actions.", revMeaning: "Your focus is fragmented, or someone around you is distorting realities. Reversal indicates that while you have massive inner talent, execution is currently bottlenecked by self-doubt or distraction." },
-            { name: "The High Priestess", yesNo: "Maybe", meaning: "The answers you are seeking cannot be found out in the loud public matrix; they are resting deep inside your quiet subconscious system. Pull back, meditate, keep your plans secret, and trust your gut feelings implicitly.", revMeaning: "You are actively ignoring your own accurate inner voice in favor of external validation. Reversal warns that you are letting superficial distractions override your higher intuitive guidance." },
-            { name: "The Empress", yesNo: "Yes", meaning: "This is a beautiful marker of absolute abundance, comfort, creativity, and fertile growth. Comfort patterns are expanding around you. Nurture what you have built and let your creative projects naturally blossom.", revMeaning: "You might be dealing with creative blocks, domestic stagnation, or giving too much of your personal energy away to ungrateful spaces. Protect your emotional resources and replenish your cup first." },
-            { name: "The Emperor", yesNo: "Yes", meaning: "This card demands structure, boundary safety, discipline, and executive authority. It is time to organize your workspace, stand firmly in your power, and build long-term structural foundations that cannot be broken.", revMeaning: "An authoritative presence is exerting toxic, rigid control patterns over your schedule, or you are lacking the internal discipline required to follow through on your dreams. Reclaim your sovereignty." },
-            { name: "The Hierophant", yesNo: "Maybe", meaning: "This energy points directly to spiritual wisdom, mentors, traditional frameworks, and higher learning structures. It suggests looking toward timeless wisdom or trusted advisors to process your current dilemma.", revMeaning: "You are breaking free from restrictive, outdated dogmas, institutional conditioning, or toxic family expectations. Reversal indicates it is time to forge your own radical individual path." },
-            { name: "The Lovers", yesNo: "Yes", meaning: "This energy honors profound soul alignments, inner harmony, open emotional paths, and critical value choices. It signals that choices should be made with absolute structural alignment to your deep, authentic heart.", revMeaning: "An internal mismatch of core values is causing an emotional divide. You may be dealing with relationship friction or a personal crossroad where your actions don't match your moral compass." },
-            { name: "The Chariot", yesNo: "Yes", meaning: "This is a direct confirmation of incoming victory through sheer focus, immense willpower, and targeted emotional direction. Keep your eyes on the finish line and dominate any brief structural roadblocks.", revMeaning: "You are spinning your wheels, losing essential control, or charging aggressively in the wrong direction. Pull the reins in, take a step back, and re-map your primary destination point." }
+            { 
+                name: "The Fool", 
+                yesNo: "Yes", 
+                svg: `<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="35" stroke="#ffb703" stroke-width="1" fill="none" stroke-dasharray="2"/><path d="M50,15 L50,85 M15,50 L85,50" stroke="#9d4edf" stroke-width="1"/><circle cx="50" cy="50" r="4" fill="#ffb703"/><path d="M30,30 L70,70 M30,70 L70,30" stroke="#9d4edf" stroke-width="0.5"/></svg>`,
+                meaning: "This card represents absolute blank-slate potential, pure freedom, and the courage to begin anew. The universe is telling you to step forward with faith, even if you can't see where the path drops off. Trust your instinctual heart right now.", 
+                revMeaning: "You are standing on a precipice of change but hesitation or reckless planning is blocking you. Reversal warns against running blindly into commitments without checking your boundaries first." 
+            },
+            { 
+                name: "The Magician", 
+                yesNo: "Yes", 
+                svg: `<svg viewBox="0 0 100 100"><path d="M30,50 Q50,20 70,50 Q50,80 30,50" stroke="#ffb703" stroke-width="1.5" fill="none"/><circle cx="50" cy="50" r="8" stroke="#9d4edf" stroke-width="1" fill="none"/><line x1="50" y1="15" x2="50" y2="85" stroke="#9d4edf" stroke-width="0.5"/></svg>`,
+                meaning: "You possess all necessary creative tools, logical skillsets, and manifestation resources to shape your physical timeline. This is an explicit signal from the universe to take immediate, inspired actions.", 
+                revMeaning: "Your focus is fragmented, or someone around you is distorting realities. Reversal indicates that while you have massive inner talent, execution is currently bottlenecked by self-doubt or distraction." 
+            },
+            { 
+                name: "The High Priestess", 
+                yesNo: "Maybe", 
+                svg: `<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="30" stroke="#9d4edf" stroke-width="1.5" fill="none"/><path d="M25,20 Q60,50 25,80 Q75,50 25,20" fill="#ffb703" opacity="0.8"/><circle cx="70" cy="50" r="5" fill="#ffb703"/></svg>`,
+                meaning: "The answers you are seeking cannot be found out in the loud public matrix; they are resting deep inside your quiet subconscious system. Pull back, meditate, keep your plans secret, and trust your gut feelings implicitly.", 
+                revMeaning: "You are actively ignoring your own accurate inner voice in favor of external validation. Reversal warns that you are letting superficial distractions override your higher intuitive guidance." 
+            },
+            { 
+                name: "The Empress", 
+                yesNo: "Yes", 
+                svg: `<svg viewBox="0 0 100 100"><polygon points="50,15 85,75 15,75" stroke="#ffb703" stroke-width="1" fill="none"/><circle cx="50" cy="55" r="18" stroke="#9d4edf" stroke-width="1.5" fill="none"/><circle cx="50" cy="55" r="4" fill="#ffb703"/></svg>`,
+                meaning: "This is a beautiful marker of absolute abundance, comfort, creativity, and fertile growth. Comfort patterns are expanding around you. Nurture what you have built and let your creative projects naturally blossom.", 
+                revMeaning: "You might be dealing with creative blocks, domestic stagnation, or giving too much of your personal energy away to ungrateful spaces. Protect your emotional resources and replenish your cup first." 
+            },
+            { 
+                name: "The Emperor", 
+                yesNo: "Yes", 
+                svg: `<svg viewBox="0 0 100 100"><rect x="25" y="25" width="50" height="50" stroke="#9d4edf" stroke-width="1.5" fill="none"/><polygon points="50,10 90,50 50,90 10,50" stroke="#ffb703" stroke-width="1" fill="none"/><circle cx="50" cy="50" r="5" fill="#ffb703"/></svg>`,
+                meaning: "This card demands structure, boundary safety, discipline, and executive authority. It is time to organize your workspace, stand firmly in your power, and build long-term structural foundations that cannot be broken.", 
+                revMeaning: "An authoritative presence is exerting toxic, rigid control patterns over your schedule, or you are lacking the internal discipline required to follow through on your dreams. Reclaim your sovereignty." 
+            },
+            { 
+                name: "The Hierophant", 
+                yesNo: "Maybe", 
+                svg: `<svg viewBox="0 0 100 100"><line x1="50" y1="15" x2="50" y2="85" stroke="#ffb703" stroke-width="2"/><line x1="25" y1="35" x2="75" y2="35" stroke="#9d4edf" stroke-width="2"/><line x1="33" y1="50" x2="67" y2="50" stroke="#9d4edf" stroke-width="2"/><line x1="40" y1="65" x2="60" y2="65" stroke="#ffb703" stroke-width="2"/></svg>`,
+                meaning: "This energy points directly to spiritual wisdom, mentors, traditional frameworks, and higher learning structures. It suggests looking toward timeless wisdom or trusted advisors to process your current dilemma.", 
+                revMeaning: "You are breaking free from restrictive, outdated dogmas, institutional conditioning, or toxic family expectations. Reversal indicates it is time to forge your own radical individual path." 
+            },
+            { 
+                name: "The Lovers", 
+                yesNo: "Yes", 
+                svg: `<svg viewBox="0 0 100 100"><circle cx="40" cy="50" r="22" stroke="#9d4edf" stroke-width="1.5" fill="none"/><circle cx="60" cy="50" r="22" stroke="#ffb703" stroke-width="1.5" fill="none"/><circle cx="50" cy="50" r="5" fill="#e2e0e7"/></svg>`,
+                meaning: "This energy honors profound soul alignments, inner harmony, open emotional paths, and critical value choices. It signals that choices should be made with absolute structural alignment to your deep, authentic heart.", 
+                revMeaning: "An internal mismatch of core values is causing an emotional divide. You may be dealing with relationship friction or a personal crossroad where your actions don't match your moral compass." 
+            },
+            { 
+                name: "The Chariot", 
+                yesNo: "Yes", 
+                svg: `<svg viewBox="0 0 100 100"><polygon points="50,15 90,45 75,85 25,85 10,45" stroke="#ffb703" stroke-width="1" fill="none"/><line x1="10" y1="45" x2="90" y2="45" stroke="#9d4edf" stroke-width="1"/><circle cx="50" cy="60" r="10" stroke="#9d4edf" stroke-width="1.5" fill="none"/></svg>`,
+                meaning: "This is a direct confirmation of incoming victory through sheer focus, immense willpower, and targeted emotional direction. Keep your eyes on the finish line and dominate any brief structural roadblocks.", 
+                revMeaning: "You are spinning your wheels, losing essential control, or charging aggressively in the wrong direction. Pull the reins in, take a step back, and re-map your primary destination point." 
+            }
         ];
 
         const automaticForecasts = [
@@ -268,7 +342,9 @@
             return cards.map((card, idx) => `
                 <div class="tarot-card">
                     ${labels[idx] ? `<div style="font-size:0.8em; color:var(--gold); font-weight:bold; margin-bottom:5px;">${labels[idx]}</div>` : ''}
-                    <div class="card-visual-box ${card.isReversed ? 'reversed' : ''}">✨</div>
+                    <div class="card-visual-box ${card.isReversed ? 'reversed' : ''}">
+                        ${card.svg}
+                    </div>
                     <div class="card-title">${card.name} ${card.isReversed ? '(Reversed)' : ''}</div>
                     ${isYesNo ? determineYesNoBadge(card) : ''}
                     <div class="card-desc"><strong>Cosmic Guidance:</strong> ${card.isReversed ? card.revMeaning : card.meaning}</div>
@@ -349,9 +425,10 @@
             `).join('');
         }
 
-        function unlockForecast() {
-            document.getElementById('paywall-ui').style.display = 'none';
-            document.getElementById('forecast-content').style.display = 'block';
+        // REDIRECT TO LIVE SHOPIFY SUBSCRIPTION LINK
+        function redirectToShopifySubscription() {
+            const shopifySubscriptionCheckoutUrl = "https://sunflowersinscorpio.myshopify.com/products/weekly-cosmic-transit-forecast-subscription";
+            window.open(shopifySubscriptionCheckoutUrl, '_blank');
         }
 
         function runAutomatedForecastCalculations() {
