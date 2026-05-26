@@ -37,7 +37,7 @@
         .tab-content { display: none; max-width: 650px; margin: 0 auto; background: var(--card-bg); padding: 20px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
         .active { display: block; }
         
-        /* Tarot Rendering Layouts */
+        /* Tarot Layouts */
         .tarot-display { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 20px; }
         .tarot-card {
             background: #201a35;
@@ -64,50 +64,41 @@
             justify-content: center;
             font-size: 2.2em;
             box-shadow: inset 0 0 20px rgba(0,0,0,0.6);
-            transition: transform 0.3s;
         }
         .reversed { transform: rotate(180deg); }
         .card-title { font-weight: bold; color: var(--gold); margin-bottom: 8px; font-size: 1.1em; }
         .card-desc { font-size: 0.85em; line-height: 1.5; text-align: left; width: 100%; margin-top: 6px; }
         
-        /* Dynamic Validation Badges (Yes/No) */
-        .verdict-badge {
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-weight: bold;
-            font-size: 0.9em;
-            margin-bottom: 8px;
-            text-transform: uppercase;
-        }
+        /* Badges */
+        .verdict-badge { display: inline-block; padding: 4px 12px; border-radius: 12px; font-weight: bold; font-size: 0.9em; margin-bottom: 8px; text-transform: uppercase; }
         .verdict-yes { background-color: #22c55e; color: #000; }
         .verdict-no { background-color: #ef4444; color: #fff; }
         .verdict-maybe { background-color: #eab308; color: #000; }
 
-        /* Upsell Smart Banner */
-        .upsell-banner {
-            background: linear-gradient(135deg, #4c1d95, #1e1b4b);
-            border: 2px solid var(--gold);
-            padding: 15px;
-            border-radius: 10px;
-            margin-top: 25px;
-            display: none;
-            text-align: center;
-            animation: fadeIn 0.5s ease-in-out;
-        }
+        /* Upsell Banner */
+        .upsell-banner { background: linear-gradient(135deg, #4c1d95, #1e1b4b); border: 2px solid var(--gold); padding: 15px; border-radius: 10px; margin-top: 25px; display: none; text-align: center; }
         
-        /* Form Element Standardizations */
-        input[type="text"], select, textarea {
-            width: 85%; padding: 10px; border-radius: 10px; border: 1px solid var(--accent);
-            background: #201a35; color: white; margin-bottom: 15px; font-size: 1em;
-            box-sizing: border-box;
+        /* Premium Shop UI Cards */
+        .premium-item-card {
+            background: #1b1630;
+            border: 1px solid #3b2d6b;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
         }
+        .premium-title { font-size: 1.1em; font-weight: bold; color: var(--gold); display: flex; justify-content: space-between; }
+        .premium-tag { background: var(--accent); color: white; font-size: 0.7em; padding: 2px 8px; border-radius: 10px; }
+
+        /* Form Standardizations */
+        input[type="text"], select, textarea { width: 85%; padding: 10px; border-radius: 10px; border: 1px solid var(--accent); background: #201a35; color: white; margin-bottom: 15px; font-size: 1em; box-sizing: border-box; }
         textarea { height: 80px; resize: none; }
         .journal-entry { background: #201a35; padding: 15px; border-radius: 10px; text-align: left; margin-bottom: 15px; border-left: 4px solid var(--accent); }
         .journal-date { font-size: 0.8em; color: #a78bfa; }
         .paywall-box { background: #2d124d; padding: 30px; border-radius: 12px; border: 2px dashed var(--gold); margin: 20px 0; }
-        
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
@@ -123,9 +114,10 @@
         <button onclick="switchTab('journal')">My Journal</button>
         <button onclick="switchTab('forecast')" style="background-color: var(--accent);">Weekly Forecast</button>
         <button onclick="window.open('https://sunflowersinscorpio.myshopify.com/', '_blank')" style="background-color: #3b82f6;">Shop Merch 🛍️</button>
-        <button onclick="switchTab('book')" style="background-color: #22c55e;">Book Reader 🔮</button>
+        <button onclick="switchTab('book')" style="background-color: #22c55e;">Premium Spreads 🔮</button>
     </div>
 
+    <!-- DAILY DRAW -->
     <div id="daily" class="tab-content active">
         <h2>Daily Alignment</h2>
         <p>Clear your thoughts, tap into your current vibrational frequency, and call forward a card guide.</p>
@@ -135,6 +127,7 @@
         <div id="daily-journal-zone" style="margin-top:15px;"></div>
     </div>
 
+    <!-- ASK QUESTIONS & SPREADS -->
     <div id="question" class="tab-content">
         <h2>Cast a Spatial Matrix</h2>
         <input type="text" id="user-query" placeholder="Type your situation or explicit question here...">
@@ -150,11 +143,13 @@
         <div id="spread-journal-zone" style="margin-top:15px;"></div>
     </div>
 
+    <!-- SPIRITUAL JOURNAL -->
     <div id="journal" class="tab-content">
         <h2>Your Saved Metaphysical Log</h2>
         <div id="journal-entries-list"></div>
     </div>
 
+    <!-- WEEKLY PAID FORECAST -->
     <div id="forecast" class="tab-content">
         <h2>Weekly Cosmic Transit Forecast</h2>
         <div id="paywall-ui" class="paywall-box">
@@ -173,65 +168,64 @@
         </div>
     </div>
 
+    <!-- COMPREHENSIVE SHOPIFY OFFERINGS PORTAL -->
     <div id="book" class="tab-content">
-        <h2>Book a Live Personal Reading</h2>
-        <p>Unpack your custom energetic structures and emotional timelines with a specialized mini oracle checkout reading.</p>
-        <a href="https://sunflowersinscorpio.myshopify.com/products/mini-tarot-oracle-reading" target="_blank">
-            <button style="background-color: #22c55e; font-size:1.2em; width:100%; padding:15px;">📅 Purchase Mini Oracle Session</button>
-        </a>
+        <h2>Premium Custom Readings</h2>
+        <p style="margin-bottom:20px; font-size:0.95em;">Need to deep-dive into complex energetic structures or emotional timelines? Select one of our specialized diagnostic mapping spreads below.</p>
+        
+        <!-- SPREAD 1 -->
+        <div class="premium-item-card">
+            <div class="premium-title">
+                Tough Sh*t Tarot Spread <span class="premium-tag">5 Cards</span>
+            </div>
+            <div style="font-size:0.85em; color:#b3afcc;">Unfiltered, blunt problem-solving roadmap layout designed to tell you exactly what you need to hear, not what you want to hear.</div>
+            <button onclick="window.open('https://sunflowersinscorpio.myshopify.com/products/problem-solving-tarot-spread', '_blank')" style="background-color:#22c55e; margin-top:5px; padding:6px 12px; font-size:0.85em;">Order This Spread</button>
+        </div>
+
+        <!-- SPREAD 2 -->
+        <div class="premium-item-card">
+            <div class="premium-title">
+                Love Blockage Tarot Spread <span class="premium-tag">3 Cards</span>
+            </div>
+            <div style="font-size:0.85em; color:#b3afcc;">Uncover the invisible emotional anchors, past relationship conditioning, or defensive blocks currently slowing down your romantic timeline alignment.</div>
+            <button onclick="window.open('https://sunflowersinscorpio.myshopify.com/products/love-blockage-tarot-spread', '_blank')" style="background-color:#22c55e; margin-top:5px; padding:6px 12px; font-size:0.85em;">Order This Spread</button>
+        </div>
+
+        <!-- SPREAD 3 -->
+        <div class="premium-item-card">
+            <div class="premium-title">
+                Getting to Know Your Spirit Guide <span class="premium-tag">6 Cards</span>
+            </div>
+            <div style="font-size:0.85em; color:#b3afcc;">Establish a clear cosmic communication link. Discover your primary guide's personality, how they send you signs, and the core message they have for you right now.</div>
+            <button onclick="window.open('https://sunflowersinscorpio.myshopify.com/products/spirit-guide-tarot-spread', '_blank')" style="background-color:#22c55e; margin-top:5px; padding:6px 12px; font-size:0.85em;">Order This Spread</button>
+        </div>
+        
+        <hr style="border:0; border-top:1px dashed var(--accent); margin:20px 0;">
+        
+        <!-- MINI READING BASE & FULL COLLECTION ACCESS -->
+        <div class="premium-item-card" style="border: 1px solid var(--gold); background: #251b33;">
+            <div class="premium-title" style="color:var(--gold);">
+                Mini Tarot &amp; Oracle Custom Session
+            </div>
+            <div style="font-size:0.85em;">Our signature introductory checkout profile reading for quick situational evaluations.</div>
+            <button onclick="window.open('https://sunflowersinscorpio.myshopify.com/products/mini-tarot-oracle-reading', '_blank')" style="background-color:var(--gold); color:black; margin-top:5px; padding:8px; font-weight:bold;">Purchase Mini Oracle Reading</button>
+        </div>
+
+        <button onclick="window.open('https://sunflowersinscorpio.myshopify.com/collections/card-spreads', '_blank')" style="background-color:transparent; border: 2px solid var(--accent); color:var(--text); width:100%; margin-top:10px; padding:12px;">
+            👀 View Full Spreads Collection
+        </button>
     </div>
 
     <script>
-        // Deeply contextual, self-contained core Tarot deck data matrix
         const tarotDeck = [
-            { 
-                name: "The Fool", 
-                yesNo: "Yes",
-                meaning: "This card represents absolute blank-slate potential, pure freedom, and the courage to begin anew. The universe is telling you to step forward with faith, even if you can't see where the path drops off. Trust your instinctual heart right now.", 
-                revMeaning: "You are standing on a precipice of change but hesitation or reckless planning is blocking you. Reversal warns against running blindly into commitments without checking your boundaries first." 
-            },
-            { 
-                name: "The Magician", 
-                yesNo: "Yes",
-                meaning: "You possess all necessary creative tools, logical skillsets, and manifestation resources to shape your physical timeline. This is an explicit signal from the universe to take immediate, inspired actions.", 
-                revMeaning: "Your focus is fragmented, or someone around you is distorting realities. Reversal indicates that while you have massive inner talent, execution is currently bottlenecked by self-doubt or distraction." 
-            },
-            { 
-                name: "The High Priestess", 
-                yesNo: "Maybe",
-                meaning: "The answers you are seeking cannot be found out in the loud public matrix; they are resting deep inside your quiet subconscious system. Pull back, meditate, keep your plans secret, and trust your gut feelings implicitly.", 
-                revMeaning: "You are actively ignoring your own accurate inner voice in favor of external validation. Reversal warns that you are letting superficial distractions override your higher intuitive guidance." 
-            },
-            { 
-                name: "The Empress", 
-                yesNo: "Yes",
-                meaning: "This is a beautiful marker of absolute abundance, comfort, creativity, and fertile growth. Comfort patterns are expanding around you. Nurture what you have built and let your creative projects naturally blossom.", 
-                revMeaning: "You might be dealing with creative blocks, domestic stagnation, or giving too much of your personal energy away to ungrateful spaces. Protect your emotional resources and replenish your cup first." 
-            },
-            { 
-                name: "The Emperor", 
-                yesNo: "Yes",
-                meaning: "This card demands structure, boundary safety, discipline, and executive authority. It is time to organize your workspace, stand firmly in your power, and build long-term structural foundations that cannot be broken.", 
-                revMeaning: "An authoritative presence is exerting toxic, rigid control patterns over your schedule, or you are lacking the internal discipline required to follow through on your dreams. Reclaim your sovereignty." 
-            },
-            { 
-                name: "The Hierophant", 
-                yesNo: "Maybe",
-                meaning: "This energy points directly to spiritual wisdom, mentors, traditional frameworks, and higher learning structures. It suggests looking toward timeless wisdom or trusted advisors to process your current dilemma.", 
-                revMeaning: "You are breaking free from restrictive, outdated dogmas, institutional conditioning, or toxic family expectations. Reversal indicates it is time to forge your own radical individual path." 
-            },
-            { 
-                name: "The Lovers", 
-                yesNo: "Yes",
-                meaning: "This energy honors profound soul alignments, inner harmony, open emotional paths, and critical value choices. It signals that choices should be made with absolute structural alignment to your deep, authentic heart.", 
-                revMeaning: "An internal mismatch of core values is causing an emotional divide. You may be dealing with relationship friction or a personal crossroad where your actions don't match your moral compass." 
-            },
-            { 
-                name: "The Chariot", 
-                yesNo: "Yes",
-                meaning: "This is a direct confirmation of incoming victory through sheer focus, immense willpower, and targeted emotional direction. Keep your eyes on the finish line and dominate any brief structural roadblocks.", 
-                revMeaning: "You are spinning your wheels, losing essential control, or charging aggressively in the wrong direction. Pull the reins in, take a step back, and re-map your primary destination point." 
-            }
+            { name: "The Fool", yesNo: "Yes", meaning: "This card represents absolute blank-slate potential, pure freedom, and the courage to begin anew. The universe is telling you to step forward with faith, even if you can't see where the path drops off. Trust your instinctual heart right now.", revMeaning: "You are standing on a precipice of change but hesitation or reckless planning is blocking you. Reversal warns against running blindly into commitments without checking your boundaries first." },
+            { name: "The Magician", yesNo: "Yes", meaning: "You possess all necessary creative tools, logical skillsets, and manifestation resources to shape your physical timeline. This is an explicit signal from the universe to take immediate, inspired actions.", revMeaning: "Your focus is fragmented, or someone around you is distorting realities. Reversal indicates that while you have massive inner talent, execution is currently bottlenecked by self-doubt or distraction." },
+            { name: "The High Priestess", yesNo: "Maybe", meaning: "The answers you are seeking cannot be found out in the loud public matrix; they are resting deep inside your quiet subconscious system. Pull back, meditate, keep your plans secret, and trust your gut feelings implicitly.", revMeaning: "You are actively ignoring your own accurate inner voice in favor of external validation. Reversal warns that you are letting superficial distractions override your higher intuitive guidance." },
+            { name: "The Empress", yesNo: "Yes", meaning: "This is a beautiful marker of absolute abundance, comfort, creativity, and fertile growth. Comfort patterns are expanding around you. Nurture what you have built and let your creative projects naturally blossom.", revMeaning: "You might be dealing with creative blocks, domestic stagnation, or giving too much of your personal energy away to ungrateful spaces. Protect your emotional resources and replenish your cup first." },
+            { name: "The Emperor", yesNo: "Yes", meaning: "This card demands structure, boundary safety, discipline, and executive authority. It is time to organize your workspace, stand firmly in your power, and build long-term structural foundations that cannot be broken.", revMeaning: "An authoritative presence is exerting toxic, rigid control patterns over your schedule, or you are lacking the internal discipline required to follow through on your dreams. Reclaim your sovereignty." },
+            { name: "The Hierophant", yesNo: "Maybe", meaning: "This energy points directly to spiritual wisdom, mentors, traditional frameworks, and higher learning structures. It suggests looking toward timeless wisdom or trusted advisors to process your current dilemma.", revMeaning: "You are breaking free from restrictive, outdated dogmas, institutional conditioning, or toxic family expectations. Reversal indicates it is time to forge your own radical individual path." },
+            { name: "The Lovers", yesNo: "Yes", meaning: "This energy honors profound soul alignments, inner harmony, open emotional paths, and critical value choices. It signals that choices should be made with absolute structural alignment to your deep, authentic heart.", revMeaning: "An internal mismatch of core values is causing an emotional divide. You may be dealing with relationship friction or a personal crossroad where your actions don't match your moral compass." },
+            { name: "The Chariot", yesNo: "Yes", meaning: "This is a direct confirmation of incoming victory through sheer focus, immense willpower, and targeted emotional direction. Keep your eyes on the finish line and dominate any brief structural roadblocks.", revMeaning: "You are spinning your wheels, losing essential control, or charging aggressively in the wrong direction. Pull the reins in, take a step back, and re-map your primary destination point." }
         ];
 
         const automaticForecasts = [
@@ -258,27 +252,21 @@
         }
 
         function determineYesNoBadge(card) {
-            if (card.yesNo === "Maybe") {
-                return `<div class="verdict-badge verdict-maybe">🔮 Unclear / Pause</div>`;
-            }
+            if (card.yesNo === "Maybe") return `<div class="verdict-badge verdict-maybe">🔮 Unclear / Pause</div>`;
             if (card.isReversed) {
-                // Reversed cards invert the core validation profile
-                return card.yesNo === "Yes" ? 
-                    `<div class="verdict-badge verdict-no">❌ No (Blocked Energy)</div>` : 
-                    `<div class="verdict-badge verdict-yes">✅ Yes (After Adjustments)</div>`;
+                return card.yesNo === "Yes" ? `<div class="verdict-badge verdict-no">❌ No (Blocked Energy)</div>` : `<div class="verdict-badge verdict-yes">✅ Yes (After Adjustments)</div>`;
             }
-            return card.yesNo === "Yes" ? 
-                `<div class="verdict-badge verdict-yes">✅ Explicit Yes</div>` : 
-                `<div class="verdict-badge verdict-no">❌ Explicit No</div>`;
+            return card.yesNo === "Yes" ? `<div class="verdict-badge verdict-yes">✅ Explicit Yes</div>` : `<div class="verdict-badge verdict-no">❌ Explicit No</div>`;
         }
 
-        function renderCardLayout(cards, labels=[], showYesNo=false) {
+        function renderCardLayout(cards, labels=[]) {
+            const isYesNo = document.getElementById('spread-select').value === "yesno" && labels[0] === "Oracle Verdict Response";
             return cards.map((card, idx) => `
                 <div class="tarot-card">
                     ${labels[idx] ? `<div style="font-size:0.8em; color:var(--gold); font-weight:bold; margin-bottom:5px;">${labels[idx]}</div>` : ''}
                     <div class="card-visual-box ${card.isReversed ? 'reversed' : ''}">✨</div>
                     <div class="card-title">${card.name} ${card.isReversed ? '(Reversed)' : ''}</div>
-                    ${showYesNo ? determineYesNoBadge(card) : ''}
+                    ${isYesNo ? determineYesNoBadge(card) : ''}
                     <div class="card-desc"><strong>Cosmic Guidance:</strong> ${card.isReversed ? card.revMeaning : card.meaning}</div>
                 </div>
             `).join('');
@@ -289,8 +277,8 @@
             upsell.style.display = "block";
             upsell.innerHTML = `
                 <div style="color:var(--gold); font-weight:bold; margin-bottom:5px;">🔮 Guidance Delivered</div>
-                <p style="margin:5px 0 12px 0; font-size:0.9em;">Confused by this outcome? Book a private reading to unpack exactly what these configurations mean for your life track.</p>
-                <button onclick="window.open('https://sunflowersinscorpio.myshopify.com/products/mini-tarot-oracle-reading', '_blank')" style="background-color:var(--gold); color:black; font-size:0.85em; padding:6px 12px;">Order Mini Reading Profile</button>
+                <p style="margin:5px 0 12px 0; font-size:0.9em;">Confused by this outcome? Let's unpack exactly what these configurations mean for your life track with an official deep-dive spread.</p>
+                <button onclick="switchTab('book')" style="background-color:var(--gold); color:black; font-size:0.85em; padding:6px 12px;">Explore Deep-Dive Spreads</button>
             `;
 
             document.getElementById(journalZoneId).innerHTML = `
@@ -312,12 +300,12 @@
             
             if (mode === "yesno") {
                 currentActiveReading = drawRandomCards(1);
-                display.innerHTML = renderCardLayout(currentActiveReading, ["Oracle Verdict Response"], true);
+                display.innerHTML = renderCardLayout(currentActiveReading, ["Oracle Verdict Response"]);
             } else {
                 const size = parseInt(mode);
                 const labels = size === 1 ? ["Clarity"] : ["Past", "Present", "Future"];
                 currentActiveReading = drawRandomCards(size);
-                display.innerHTML = renderCardLayout(currentActiveReading, labels, false);
+                display.innerHTML = renderCardLayout(currentActiveReading, labels);
             }
             injectUpsellAndJournalUI('spread-upsell', 'spread-journal-zone');
         }
