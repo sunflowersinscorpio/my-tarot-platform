@@ -114,7 +114,8 @@
         <button onclick="switchTab('journal')">My Journal</button>
         <button onclick="switchTab('forecast')" style="background-color: var(--accent);">Weekly Forecast</button>
         <button onclick="window.open('https://sunflowersinscorpio.myshopify.com/', '_blank')" style="background-color: #3b82f6;">Shop Merch 🛍️</button>
-        <button onclick="switchTab('book')" style="background-color: #22c55e;">Premium Spreads 🔮</button>
+        <button onclick="switchTab('spreads')">Premium Spreads 📚</button>
+        <button onclick="switchTab('book')" style="background-color: #22c55e;">Book Sarah 🔮</button>
     </div>
 
     <!-- DAILY DRAW -->
@@ -168,10 +169,10 @@
         </div>
     </div>
 
-    <!-- COMPREHENSIVE SHOPIFY OFFERINGS PORTAL -->
-    <div id="book" class="tab-content">
-        <h2>Premium Custom Readings</h2>
-        <p style="margin-bottom:20px; font-size:0.95em;">Need to deep-dive into complex energetic structures or emotional timelines? Select one of our specialized diagnostic mapping spreads below.</p>
+    <!-- PREMIUM CUSTOM SPREADS PORTAL -->
+    <div id="spreads" class="tab-content">
+        <h2>Premium Custom Spreads</h2>
+        <p style="margin-bottom:20px; font-size:0.95em;">Need to deep-dive into complex energetic structures or emotional timelines? Select one of our specialized diagnostic mapping layouts below.</p>
         
         <!-- SPREAD 1 -->
         <div class="premium-item-card">
@@ -200,20 +201,23 @@
             <button onclick="window.open('https://sunflowersinscorpio.myshopify.com/products/spirit-guide-tarot-spread', '_blank')" style="background-color:#22c55e; margin-top:5px; padding:6px 12px; font-size:0.85em;">Order This Spread</button>
         </div>
         
-        <hr style="border:0; border-top:1px dashed var(--accent); margin:20px 0;">
-        
-        <!-- MINI READING BASE & FULL COLLECTION ACCESS -->
-        <div class="premium-item-card" style="border: 1px solid var(--gold); background: #251b33;">
-            <div class="premium-title" style="color:var(--gold);">
-                Mini Tarot &amp; Oracle Custom Session
-            </div>
-            <div style="font-size:0.85em;">Our signature introductory checkout profile reading for quick situational evaluations.</div>
-            <button onclick="window.open('https://sunflowersinscorpio.myshopify.com/products/mini-tarot-oracle-reading', '_blank')" style="background-color:var(--gold); color:black; margin-top:5px; padding:8px; font-weight:bold;">Purchase Mini Oracle Reading</button>
-        </div>
-
         <button onclick="window.open('https://sunflowersinscorpio.myshopify.com/collections/card-spreads', '_blank')" style="background-color:transparent; border: 2px solid var(--accent); color:var(--text); width:100%; margin-top:10px; padding:12px;">
             👀 View Full Spreads Collection
         </button>
+    </div>
+
+    <!-- BOOKINGS HUB (SARAH RESURRECTED) -->
+    <div id="book" class="tab-content">
+        <h2>Book a Live Personal Reading with Sarah</h2>
+        <p style="margin-bottom: 25px;">Work one-on-one with Sarah to map out your energetic pathways, timeline patterns, and long-form personal oracle validation profiles.</p>
+        
+        <div class="premium-item-card" style="border: 1px solid var(--gold); background: #251b33; text-align: center;">
+            <h3 style="color:var(--gold); margin: 5px 0 10px 0;">Custom Mini Tarot &amp; Oracle Session</h3>
+            <p style="font-size:0.9em; margin-bottom:15px;">Our signature introductory remote session for quick, targeted answers to your most pressing questions.</p>
+            <a href="https://sunflowersinscorpio.myshopify.com/products/mini-tarot-oracle-reading" target="_blank" style="text-decoration:none;">
+                <button style="background-color: #22c55e; font-size:1.1em; width:100%; padding:12px; border-radius:8px;">📅 Purchase Mini Oracle Reading</button>
+            </a>
+        </div>
     </div>
 
     <script>
@@ -278,7 +282,8 @@
             upsell.innerHTML = `
                 <div style="color:var(--gold); font-weight:bold; margin-bottom:5px;">🔮 Guidance Delivered</div>
                 <p style="margin:5px 0 12px 0; font-size:0.9em;">Confused by this outcome? Let's unpack exactly what these configurations mean for your life track with an official deep-dive spread.</p>
-                <button onclick="switchTab('book')" style="background-color:var(--gold); color:black; font-size:0.85em; padding:6px 12px;">Explore Deep-Dive Spreads</button>
+                <button onclick="switchTab('spreads')" style="background-color:var(--gold); color:black; font-size:0.85em; padding:6px 12px; margin-right:5px;">Explore Spreads</button>
+                <button onclick="switchTab('book')" style="background-color:#22c55e; color:white; font-size:0.85em; padding:6px 12px; border:none; font-weight:bold; border-radius:4px; cursor:pointer;">Book with Sarah</button>
             `;
 
             document.getElementById(journalZoneId).innerHTML = `
